@@ -7,7 +7,9 @@ class Tasks extends Component {
         this.state = {
             tasks: [
                 { name: "Go to town", complete: false },
-                { name: "Fuck the beaches", complete: true }
+                { name: "Complete Tutorial", complete: true },
+                { name: "Hang out on Laracasts", complete: false },
+                { name: "Go to the bank", complete: true }
             ],
             isAdding: false
         };
