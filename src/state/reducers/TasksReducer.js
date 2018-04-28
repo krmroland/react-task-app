@@ -1,16 +1,22 @@
 function fetchTasks() {
-    let tasks = JSON.parse(window.localStorage.getItem("tasks"));
+    let tasks = null;
+
+    const firsTask = [
+        {
+            id: new Date().getTime(),
+            name: "Make it to Andela no mater how long it takes",
+            isComplete: false
+        }
+    ];
+    try {
+        tasks = JSON.parse(localStorage.getItem("tasks")) || firsTask;
+    } catch (e) {
+        //probably we are using jest that doesn't support window.localstorage or some one messed up the json in the storage, which ever way , we reset the tasks and continue on our way
+        tasks = firsTask;
+    }
 
     if (!tasks) {
-        //seed initial data
-        tasks = [
-            {
-                id: new Date().getTime(),
-                name: "Make it to Andela no mater how long it takes",
-                isComplete: false
-            }
-        ];
-        window.localStorage.setItem("tasks", JSON.stringify(tasks));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
     return tasks;
@@ -54,7 +60,7 @@ export default function(state = initialState, action) {
                 id: new Date().getTime()
             });
 
-            window.localStorage.setItem("tasks", JSON.stringify(tasks));
+            localStorage.setItem("tasks", JSON.stringify(tasks));
 
             return {
                 ...state,
@@ -77,7 +83,7 @@ export default function(state = initialState, action) {
                 ]
             };
 
-            window.localStorage.setItem("tasks", JSON.stringify(state.tasks));
+            localStorage.setItem("tasks", JSON.stringify(state.tasks));
 
             return state;
 
@@ -91,7 +97,7 @@ export default function(state = initialState, action) {
                     return { ...task, isComplete: !task.isComplete };
                 })
             };
-            window.localStorage.setItem("tasks", JSON.stringify(state.tasks));
+            localStorage.setItem("tasks", JSON.stringify(state.tasks));
             return state;
 
         default:
