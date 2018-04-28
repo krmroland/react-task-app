@@ -25,7 +25,7 @@ class Task extends Component {
     style() {
         return this.props.task.isComplete
             ? {
-                  textDecoration: "line-through"
+                  textDecoration: "line-through rgba(0,0,0,0.4)"
               }
             : {};
     }
