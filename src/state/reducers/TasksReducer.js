@@ -1,18 +1,12 @@
+import defaultTasks from "./defaultTasks";
 function fetchTasks() {
     let tasks = null;
 
-    const firsTask = [
-        {
-            id: new Date().getTime(),
-            name: "Make it to Andela no mater how long it takes",
-            isComplete: false
-        }
-    ];
     try {
-        tasks = JSON.parse(localStorage.getItem("tasks")) || firsTask;
+        tasks = JSON.parse(localStorage.getItem("tasks")) || defaultTasks;
     } catch (e) {
         //probably we are using jest that doesn't support window.localstorage or some one messed up the json in the storage, which ever way , we reset the tasks and continue on our way
-        tasks = firsTask;
+        tasks = defaultTasks;
     }
 
     if (!tasks) {
