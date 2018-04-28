@@ -1,51 +1,60 @@
 import React, { Component } from "react";
+import IconCheck from "./icons/IconCheck";
+import IconClose from "./icons/IconClose";
+import IconTrash from "./icons/IconTrash";
+import { deleteTask, toggleTaskIsComplete } from "./state/actions/TaskActions";
 
+import { connect } from "react-redux";
 class Task extends Component {
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.remove = this.remove.bind(this);
+        this.toggleIsComplete = this.toggleIsComplete.bind(this);
     }
-    toggle() {
-        this.props.toggle(this.props.id);
+    toggleIsComplete(e) {
+        e.preventDefault();
+        this.props.toggleIsComplete(this.props.task.id);
     }
-    remove() {
-        this.props.remove(this.props.id);
-    }
-    textSyle() {
-        if (this.props.task.complete) {
-            return { textDecoration: "line-through", color: "blue" };
-        }
+    remove(e) {
+        e.preventDefault();
 
-        return {};
+        if (window.confirm("The task will be removed")) {
+            this.props.remove(this.props.task.id);
+        }
+    }
+    style() {
+        return this.props.task.isComplete
+            ? {
+                  textDecoration: "line-through"
+              }
+            : {};
     }
     render() {
         return (
-            <li className="list-group-item m-0 d-flex justify-content-between">
-                <label className="custom-control custom-checkbox m-0">
-                    <input
-                        type="checkbox"
-                        className="custom-control-input"
-                        onChange={this.toggle}
-                        value={this.props.task.complete}
-                        checked={this.props.task.complete}
-                    />
-                    <span className="custom-control-indicator" />
-                    <span
-                        className="custom-control-description"
-                        style={this.textSyle()}
-                    >
-                        {this.props.task.name}
-                    </span>
-                </label>
-                <button
-                    className="btn btn-outline-danger"
-                    onClick={this.remove}
-                >
-                    remove
-                </button>
-            </li>
+            <tr className="task">
+                <td className="task-icon">
+                    <a href="" onClick={this.toggleIsComplete}>
+                        {this.props.task.isComplete ? (
+                            <IconClose className="fill-danger" />
+                        ) : (
+                            <IconCheck />
+                        )}
+                    </a>
+                </td>
+                <td style={this.style()}>{this.props.task.name}</td>
+                <td className="task-actions">
+                    <a href="" onClick={this.remove}>
+                        <IconTrash />
+                    </a>
+                </td>
+            </tr>
         );
     }
 }
-export default Task;
+
+const mapDispatchToActions = dispatch => ({
+    remove: id => dispatch(deleteTask(id)),
+    toggleIsComplete: id => dispatch(toggleTaskIsComplete(id))
+});
+
+export default connect(state => ({}), mapDispatchToActions)(Task);

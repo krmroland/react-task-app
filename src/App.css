@@ -1,10 +1,174 @@
-body,
-html {
-  height: 100%;
+* {
+    margin: 0;
+    padding: 0;
+}
+html,
+body {
+    height: 100%;
+    width: 100%;
+    box-sizing: content-box;
+}
+body {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #343a40;
 }
 
-body {
-  padding: 40px;
-  background-color: #dfdbe5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80' width='80' height='80'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M14 16H9v-2h5V9.87a4 4 0 1 1 2 0V14h5v2h-5v15.95A10 10 0 0 0 23.66 27l-3.46-2 8.2-2.2-2.9 5a12 12 0 0 1-21 0l-2.89-5 8.2 2.2-3.47 2A10 10 0 0 0 14 31.95V16zm40 40h-5v-2h5v-4.13a4 4 0 1 1 2 0V54h5v2h-5v15.95A10 10 0 0 0 63.66 67l-3.47-2 8.2-2.2-2.88 5a12 12 0 0 1-21.02 0l-2.88-5 8.2 2.2-3.47 2A10 10 0 0 0 54 71.95V56zm-39 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm40-40a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM15 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm40 40a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'%3E%3C/path%3E%3C/svg%3E");
+svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table td {
+    font-size: 1.25rem;
+    padding: 0.75rem 1rem;
+}
+
+.control {
+    display: block;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    border: 0;
+    background: #eee;
+}
+
+.control:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.05rem rgba(0, 0, 0, 0.25);
+    border: none;
+}
+
+#root {
+    width: 100%;
+    padding: 10px;
+}
+
+.card {
+    padding: 1rem 0;
+    background: #fff;
+
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1),
+        0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+.task-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.search {
+    position: relative;
+    /*  margin: 0 10px; */
+}
+.search-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    position: absolute;
+    right: 5px;
+    top: 0.5rem;
+    fill: rgba(0, 0, 0, 0.25);
+}
+
+.tasks {
+    margin-top: 15px;
+}
+
+.tasks-add svg {
+    width: 2rem;
+    height: 2rem;
+    fill: blue;
+}
+
+.task:hover {
+    cursor: pointer;
+}
+.task:nth-of-type(2n) {
+    background: rgba(0, 0, 0, 0.03);
+}
+.task-icon svg {
+    fill: blue;
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.task-actions {
+    text-align: right;
+}
+.task-actions a {
+    padding-left: 10px;
+    color: #6c757d;
+}
+
+/* utilities */
+
+.flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.jcb {
+    justify-content: space-between;
+}
+
+.acc {
+    align-items: center;
+}
+
+.p-1 {
+    padding: 1rem;
+}
+
+.button {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    color: #fff;
+    background: blue;
+}
+.form-error {
+    color: red;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.fill-danger {
+    fill: red !important;
+}
+
+.card .card {
+    box-shadow: none;
+}
+
+.control.search-control {
+    border-left: 3px solid blue;
+}
+
+@media (min-width: 1025px) {
+    #root {
+        width: 60%;
+    }
 }
