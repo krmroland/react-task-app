@@ -4,7 +4,6 @@
 }
 html,
 body {
-    height: 100%;
     width: 100%;
     box-sizing: content-box;
 }
@@ -17,6 +16,7 @@ body {
     font-weight: 400;
     line-height: 1.5;
     color: #343a40;
+    padding-top: 1rem;
 }
 
 svg {
