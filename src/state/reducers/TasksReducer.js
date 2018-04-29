@@ -66,7 +66,7 @@ export default function(state = initialState, action) {
                 task => task.id === action.id
             );
 
-            if (!deleteIndex) {
+            if (deleteIndex === undefined) {
                 return state;
             }
             state = {
