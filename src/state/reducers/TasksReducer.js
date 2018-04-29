@@ -1,4 +1,17 @@
 import defaultTasks from "./defaultTasks";
+const sortTasks = function(tasks) {
+    return tasks.sort((prev, next) => {
+        //favor the uncompleted tasks first and then their id, since its time generated
+        if (prev.isComplete && !next.isComplete) {
+            return 1;
+        }
+
+        if (!prev.isComplete && next.isComplete) {
+            return -1;
+        }
+        return prev.id - next.id;
+    });
+};
 function fetchTasks() {
     let tasks = null;
 
@@ -13,7 +26,7 @@ function fetchTasks() {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
-    return tasks;
+    return sortTasks(tasks);
 }
 
 let initialState = {
@@ -22,12 +35,6 @@ let initialState = {
 };
 export default function(state = initialState, action) {
     switch (action.type) {
-        case "ADD-TASK":
-            return state.tasks.concat({
-                name: action.name,
-                completed: false,
-                id: String(new Date())
-            });
         case "FILTER-TASKS":
             if (!action.key) {
                 return { ...state, tasks: fetchTasks() };
@@ -49,10 +56,12 @@ export default function(state = initialState, action) {
             };
 
         case "STORE-TASK":
-            const tasks = state.tasks.concat({
-                ...action.task,
-                id: new Date().getTime()
-            });
+            const tasks = sortTasks(
+                state.tasks.concat({
+                    ...action.task,
+                    id: new Date().getTime()
+                })
+            );
 
             localStorage.setItem("tasks", JSON.stringify(tasks));
 
@@ -71,10 +80,10 @@ export default function(state = initialState, action) {
             }
             state = {
                 ...state,
-                tasks: [
+                tasks: sortTasks([
                     ...state.tasks.slice(0, deleteIndex),
                     ...state.tasks.slice(deleteIndex + 1)
-                ]
+                ])
             };
 
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
@@ -84,12 +93,14 @@ export default function(state = initialState, action) {
         case "TOGGLE-IS-COMPLETE":
             state = {
                 ...state,
-                tasks: state.tasks.map(task => {
-                    if (task.id !== action.id) {
-                        return task;
-                    }
-                    return { ...task, isComplete: !task.isComplete };
-                })
+                tasks: sortTasks(
+                    state.tasks.map(task => {
+                        if (task.id !== action.id) {
+                            return task;
+                        }
+                        return { ...task, isComplete: !task.isComplete };
+                    })
+                )
             };
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
             return state;
